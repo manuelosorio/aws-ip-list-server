@@ -1,4 +1,9 @@
 import express from "express";
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +26,8 @@ async function fetchAwsIpRanges() {
 // Refresh IP data every hour
 setInterval(fetchAwsIpRanges, 60 * 60 * 1000);
 fetchAwsIpRanges();
+
+app.use(express.static(join(__dirname, 'public')));
 
 // Endpoint to get IP ranges with optional filters
 app.get("/aws-ips", (req, res) => {
