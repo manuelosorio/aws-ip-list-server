@@ -36,7 +36,11 @@ app.get("/aws-ips", (req, res) => {
   let filteredIps = awsIpRanges;
   
   if (region) {
-    filteredIps = filteredIps.filter(ip => ip.region === region);
+    filteredIps = filteredIps.filter(ip => ip.region.includes(region));
+    console.info({
+      region: region,
+      count: filteredIps.length
+    })
   }
   
   if (type) {
